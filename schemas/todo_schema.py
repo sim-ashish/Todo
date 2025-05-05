@@ -25,7 +25,7 @@ class InputTodo(BaseModel):
 
     class Config:
         json_encoders = {
-            date: lambda v: v.strftime('%d-%m-%Y')  # ✅ correct formatter
+            date: lambda v: v.strftime('%d-%m-%Y')  
         }
 
 class OutputTodo(InputTodo):
