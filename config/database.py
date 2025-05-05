@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
 
-engine = create_engine(os.getenv('DATABASE_URL'), connection_args = {"check_same_thread" : False}, echo=True)
+engine = create_engine(os.getenv('DATABASE_URL'), echo=False)
 
 sessionLocal = sessionmaker(autoflush=False,
                             autocommit = False,
