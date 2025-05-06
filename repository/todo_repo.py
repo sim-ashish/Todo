@@ -2,9 +2,10 @@ from sqlalchemy.orm import Session
 from typing import List, Any
 from uuid import UUID
 
-
 from schemas.todo_schema import (InputTodo,
-                                 OutputTodo)
+                                 OutputTodo,
+                                 UpdateTodo)
+
 from models import todo as todo_model
 
 
@@ -28,6 +29,12 @@ def create(todo: InputTodo, db: Session) -> OutputTodo:
     db.refresh(todo_instance)
 
     return todo_instance
+
+def update(id: UUID, todo: UpdateTodo, db: Session):
+    db.query(todo_model.Todo).filter(todo_model.Todo.id == id).update(todo.model_dump(exclude_unset = True))
+    db.commit()
+
+    return
 
 
 def retrieve(id: UUID, db: Session) -> OutputTodo:
