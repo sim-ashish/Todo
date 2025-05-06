@@ -1,5 +1,7 @@
 from schemas.todo_schema import (InputTodo,
-                                OutputTodo,)
+                                OutputTodo,
+                                UpdateTodo)
+
 from fastapi import HTTPException, status
 from typing import List, Any
 from uuid import UUID
@@ -11,6 +13,9 @@ def list_service(db: Session) -> List[OutputTodo]:
 
 def create_service(todo: InputTodo, db: Session) -> OutputTodo:
     return todo_repo.create(todo, db)
+
+def update_service(id: UUID, todo: UpdateTodo, db: Session):
+    return todo_repo.update(id, todo, db)
 
 def retrieve_service(id: UUID, db: Session) -> OutputTodo:
     if todo_repo.instance_exist(id, db):

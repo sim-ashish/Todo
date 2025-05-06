@@ -39,3 +39,9 @@ class OutputTodo(InputTodo):
             **InputTodo.Config.json_encoders,
             datetime: lambda v: v.strftime('%d-%m-%Y %H:%M:%S')  # Optional: format datetime too
         }
+
+class UpdateTodo(BaseModel):
+    title : Union[str, None] = Field(default = None, min_length=2, description='Title should not be empty')
+    description : Union[str, None] = None
+    status : Union[Status, None] = None
+    priority : Union[bool, None] = None
