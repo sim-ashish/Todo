@@ -1,5 +1,6 @@
 from fastapi import APIRouter, status,  Depends
 from sqlalchemy.orm import Session
+from dependency import check_user_cookie
 
 from schemas import (InputTodo,
                      OutputTodo,
@@ -25,8 +26,8 @@ DB_CONNECTION = Annotated[Session, Depends(get_db)]
         summary="List all todos",
         description="List all the todos for the authenticated user"
         )
-def all_todo(db: DB_CONNECTION) -> List[OutputTodo]:
-    return todo_services.list_service(db)
+def all_todo(db: DB_CONNECTION, user_id: int = Depends(check_user_cookie)) -> List[OutputTodo]:
+    return todo_services.list_service(db, user_id)
 
 
 @router.post(
@@ -35,8 +36,8 @@ def all_todo(db: DB_CONNECTION) -> List[OutputTodo]:
             summary="Create a Todo",
             description="Create a new todo"
             )
-def create_todo(todo: InputTodo, db: DB_CONNECTION) -> OutputTodo :
-    return todo_services.create_service(todo, db)
+def create_todo(todo: InputTodo, db: DB_CONNECTION, user_id: int = Depends(check_user_cookie)) -> OutputTodo :
+    return todo_services.create_service(todo, db, user_id)
 
 
 @router.patch('/{id: UUID}',

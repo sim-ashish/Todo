@@ -5,6 +5,7 @@ from sqlalchemy.sql import func
 
 
 
+
 class User(Base):
     __tablename__ = 'users'
 
@@ -13,5 +14,5 @@ class User(Base):
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
     created_at = Column(DateTime, default=func.now())
-    todos = relationship("Todo", back_populates="owner")
+    todos = relationship("Todo", back_populates="owner", cascade="all, delete", lazy="joined")
 
