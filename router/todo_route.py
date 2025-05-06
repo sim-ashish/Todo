@@ -8,7 +8,7 @@ from schemas import (InputTodo,
 from services import todo_services
 from typing_extensions import Annotated
 from config.database import get_db
-from typing import List, Any
+from typing import List
 from uuid import UUID
 
 

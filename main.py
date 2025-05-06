@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from router import todo_route
+from router import (todo_route, user_route)
 from utils.init_db import create_tables
 
 description = """
@@ -39,3 +39,4 @@ def on_startup() -> None:
     create_tables()
 
 app.include_router(todo_route.router)
+app.include_router(user_route.router)
