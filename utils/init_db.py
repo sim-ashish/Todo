@@ -1,2 +1,6 @@
+from config.database import engine
+from models.todo import Todo
+
+
 def create_tables():
-    pass
+    Todo.metadata.create_all(bind=engine)

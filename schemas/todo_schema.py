@@ -2,6 +2,7 @@ from datetime import date, datetime, timedelta
 from typing import Union
 from enum import Enum
 from pydantic import BaseModel, Field, validator
+from uuid import UUID
 
 class Status(str, Enum):
     completed = 'completed'
@@ -25,12 +26,13 @@ class InputTodo(BaseModel):
 
     class Config:
         json_encoders = {
-            date: lambda v: v.strftime('%d-%m-%Y')  # ✅ correct formatter
+            date: lambda v: v.strftime('%d-%m-%Y')  
         }
 
 class OutputTodo(InputTodo):
-    status: Status = Status.pending
-    created_at: datetime = datetime.now()
+    id: UUID
+    status: Status 
+    created_at: datetime
 
     class Config:
         json_encoders = {
