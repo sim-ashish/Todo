@@ -1,8 +1,10 @@
 import uuid
 from config.database import Base
-from sqlalchemy import Column, String, DateTime, Boolean
+from sqlalchemy import Column, String, DateTime, Boolean, ForeignKey, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
+
 
 class Todo(Base):
     __tablename__ = "todos"
@@ -14,4 +16,7 @@ class Todo(Base):
     created_at = Column(DateTime, default=func.now())
     due_date = Column(DateTime)
     priority = Column(Boolean)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    # Link back to User
+    owner = relationship("User", back_populates="todos")
 

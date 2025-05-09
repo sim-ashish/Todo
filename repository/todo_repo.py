@@ -17,13 +17,13 @@ def instance_exist(id: UUID, db: Session) -> bool:
     return False
 
 
-def get_all(db: Session) -> List[OutputTodo]:
-    todos = db.query(todo_model.Todo).all()
+def get_all(db: Session, user_id: int) -> List[OutputTodo]:
+    todos = db.query(todo_model.Todo).filter(todo_model.Todo.user_id == user_id).all()
 
     return todos
 
-def create(todo: InputTodo, db: Session) -> OutputTodo:
-    todo_instance = todo_model.Todo(**todo.model_dump())
+def create(todo: InputTodo, db: Session, user_id: int) -> OutputTodo:
+    todo_instance = todo_model.Todo(**todo.model_dump(), user_id = user_id)
     db.add(todo_instance)
     db.commit()
     db.refresh(todo_instance)
