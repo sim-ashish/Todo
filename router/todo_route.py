@@ -40,6 +40,7 @@ def create_todo(todo: InputTodo, db: DB_CONNECTION, user_id: int = Depends(check
     return todo_services.create_service(todo, db, user_id)
 
 
+
 @router.patch('/{id: UUID}',
              status_code=status.HTTP_200_OK,
              summary="Update a Todo",
