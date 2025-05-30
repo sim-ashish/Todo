@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from router import (todo_route, user_route)
 from utils.init_db import create_tables
 
@@ -22,7 +23,7 @@ You will be able to:
 app = FastAPI(
     docs_url="/documentation",
     redoc_url=None,
-    debug = True,
+    debug = False,
     title = "Todo App",
     description = description,
     summary="User's favorite app for todos.",
@@ -34,9 +35,22 @@ app = FastAPI(
     },
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 @app.on_event("startup")
 def on_startup() -> None:
     create_tables()
+
+@app.get("/")
+async def main():
+    return {"message": "Hello World"}
 
 app.include_router(todo_route.router)
 app.include_router(user_route.router)
